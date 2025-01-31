@@ -18,27 +18,35 @@
     </form>
 
     <script>
-        // Function to send OTP
         function sendOTP() {
             let phone = document.getElementById('phone').value;
-            fetch('/send_otp', {
+
+            fetch('http://127.0.0.1:5000/send_otp', {  // Replace with your backend URL when deployed
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone: phone })
-            }).then(response => response.json())
-              .then(data => alert(data.message));
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // Show message from backend
+            })
+            .catch(error => console.error('Error:', error));
         }
 
-        // Function to verify OTP
         function verifyOTP() {
             let phone = document.getElementById('phone').value;
             let otp = document.getElementById('otp').value;
-            fetch('/verify_otp', {
+
+            fetch('http://127.0.0.1:5000/verify_otp', {  // Replace with your backend URL when deployed
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ phone: phone, otp: otp })
-            }).then(response => response.json())
-              .then(data => alert(data.message));
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // Show message from backend
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
