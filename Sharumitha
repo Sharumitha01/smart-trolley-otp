@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Trolley Pairing</title>
+</head>
+<body>
+    <h2>Pair Your Trolley</h2>
+    <form id="otp-form">
+        <label for="phone">Enter Mobile Number:</label>
+        <input type="text" id="phone" required>
+        <button type="button" onclick="sendOTP()">Get OTP</button>
+        <br><br>
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" required>
+        <button type="button" onclick="verifyOTP()">Verify OTP & Pair</button>
+    </form>
+
+    <script>
+        // Function to send OTP
+        function sendOTP() {
+            let phone = document.getElementById('phone').value;
+            fetch('/send_otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: phone })
+            }).then(response => response.json())
+              .then(data => alert(data.message));
+        }
+
+        // Function to verify OTP
+        function verifyOTP() {
+            let phone = document.getElementById('phone').value;
+            let otp = document.getElementById('otp').value;
+            fetch('/verify_otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: phone, otp: otp })
+            }).then(response => response.json())
+              .then(data => alert(data.message));
+        }
+    </script>
+</body>
+</html>
